@@ -1,11 +1,12 @@
 class Restaurant < ApplicationRecord
   # associations and validations go in the model
   # category array goes here
-  @allowed_categories = ["chinese", "italian", "japanese", "french", "belgian"]
+  # CAPITALS makes it global and can be used everywhere
+  ALLOWED_CATEGORIES = ["chinese", "italian", "japanese", "french", "belgian"]
   has_many :reviews, dependent: :destroy
 
   validates :name, :address, :category, presence: true
-  validates :category, inclusion: @allowed_categories
+  validates :category, inclusion: ALLOWED_CATEGORIES
 
   # When a restaurant is destroyed, all of its reviews must be destroyed as well.
 end
