@@ -5,6 +5,9 @@ class RestaurantsController < ApplicationController
 
   def show
     @restaurant = Restaurant.find(params[:id])
+    # have access to @review because it belongs to restaurants
+    # does it work the other way too?
+    @review = Review.new
   end
 
   def new
@@ -13,8 +16,11 @@ class RestaurantsController < ApplicationController
 
   def create
     @restaurant = Restaurant.new(set_restaurant)
-    @restaurant.save
-    redirect_to restaurant_path(@restaurant)
+    if @restaurant.save
+      redirect_to restaurant_path(@restaurant)
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   private

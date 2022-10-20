@@ -1,8 +1,38 @@
+<div class="container">
 
-<ul>
-  <li><%= @restaurant.name %></li>
-  <li><%= @restaurant.address %></li>
-  <li><%= @restaurant.category %></li>
-</ul>
+  <h2>Restaurant details</h2>
+  <p> <%= link_to " Go back home", restaurants_path %> </p>
+  <ul>
+    <li><%= @restaurant.name %></li>
+    <li><%= @restaurant.address %></li>
+    <li><%= @restaurant.category %></li>
+  </ul>
 
-<%= link_to "Home", restaurants_path %>
+
+  <div>
+    <h2> <%= @restaurant.name %> reviews</h2>
+    <div>
+      <ol>
+        <% @restaurant.reviews.each do |review| %>
+          <li>
+            <p> <b>Review:</b> <%= review.content %> </p>
+            <p> <b>Rating:</b> <%= review.rating %> / 5</p>
+          </li>
+        <% end %>
+      </ol>
+    </div>
+  </div>
+
+  <%# Add review %>
+  <div>
+    <h4> Add review for <%= @restaurant.name %> </h3>
+    <%= simple_form_for [@restaurant, @review] do |f| %>
+      <%= f.input :content %>
+      <%= f.input :rating %>
+      <%= f.submit %>
+    <% end %>
+  </div>
+
+</div>
+
+<%# <%= link_to "Add Review", new_restaurant_review_path(@restaurant, @review) %>
